@@ -6,14 +6,14 @@ import (
 )
 
 func main() {
-	// define and configure all LED pins
-	leds := [6]machine.Pin{machine.D2, machine.D4, machine.D6, machine.D8, machine.D10, machine.D12}
-	for _, led := range leds {
-		led.Configure(machine.PinConfig{Mode: machine.PinOutput})
-		led.Low()
+	// list and configure all available LED pins
+	ledPins := [6]machine.Pin{machine.D2, machine.D4, machine.D6, machine.D8, machine.D10, machine.D12}
+	for _, pin := range ledPins {
+		pin.Configure(machine.PinConfig{Mode: machine.PinOutput})
+		pin.Low()
 	}
 
-	// setup analog-digital-conversion
+	// setup analog-digital-conversion for analog reading
 	machine.InitADC()
 	tempPin := machine.ADC{Pin: machine.ADC5}
 	tempPin.Configure(machine.ADCConfig{})
@@ -26,16 +26,16 @@ func main() {
 		println(tempPin.Get())
 
 		// turn off all LEDs
-		for _, led := range leds {
+		for _, led := range ledPins {
 			led.Low()
 		}
 
 		// turn on all LEDs up to calculated index
-		if idx >= len(leds) {
-			idx = len(leds) - 1
+		if idx >= len(ledPins) {
+			idx = len(ledPins) - 1
 		}
 		for n := 0; n <= idx; n++ {
-			leds[n].High()
+			ledPins[n].High()
 		}
 
 		// wait a bit
