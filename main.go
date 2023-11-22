@@ -20,5 +20,7 @@ func main() {
 
 	// main loop
 	for {
+		// wait a bit
+		time.Sleep(time.Millisecond * 500)
 	}
 }
